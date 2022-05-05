@@ -1,0 +1,14 @@
+package {{packagePath}}
+
+
+import com.copperleaf.ballast.EventHandler
+import com.copperleaf.ballast.EventHandlerScope
+
+class {{pascalName}}EventHandler : EventHandler<{{pascalName}}Contract.Inputs, {{pascalName}}Contract.Events, {{pascalName}}Contract.State> {
+    override suspend fun EventHandlerScope<{{pascalName}}Contract.Inputs, {{pascalName}}Contract.Events, {{pascalName}}Contract.State>.handleEvent(
+        event: {{pascalName}}Contract.Events
+    ) = when (event) {
+        {{pascalName}}Contract.Events.ResetName -> TODO()
+    }
+
+}

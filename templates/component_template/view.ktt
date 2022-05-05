@@ -1,0 +1,16 @@
+package {{packagePath}}
+
+
+import androidx.compose.material.Text
+import androidx.compose.runtime.*
+
+@Composable
+fun {{pascalName}}View() {
+    val applicationCoroutineScope = rememberCoroutineScope()
+    val {{camelName}}ViewModel = remember(applicationCoroutineScope) {
+        {{pascalName}}ViewModel(applicationCoroutineScope)
+    }
+    val {{camelName}}State: {{pascalName}}Contract.State by {{camelName}}ViewModel.observeStates().collectAsState()
+
+    Text({{camelName}}State.name)
+}

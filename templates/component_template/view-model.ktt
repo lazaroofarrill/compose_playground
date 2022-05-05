@@ -1,0 +1,18 @@
+package {{packagePath}}
+
+import com.copperleaf.ballast.BallastViewModelConfiguration
+import com.copperleaf.ballast.core.BasicViewModel
+import com.copperleaf.ballast.core.LoggingInterceptor
+import com.copperleaf.ballast.forViewModel
+import kotlinx.coroutines.CoroutineScope
+
+class {{pascalName}}ViewModel(applicationCoroutineScope: CoroutineScope) :
+    BasicViewModel<{{pascalName}}Contract.Inputs, {{pascalName}}Contract.Events, {{pascalName}}Contract.State>(
+        coroutineScope = applicationCoroutineScope,
+        config = BallastViewModelConfiguration.Builder()
+            .apply {
+                this.interceptors += LoggingInterceptor<{{pascalName}}Contract.Inputs, {{pascalName}}Contract.Events, {{pascalName}}Contract.State>()
+            }.forViewModel(initialState = {{pascalName}}Contract.State(), inputHandler = {{pascalName}}InputHandler()),
+        eventHandler = {{pascalName}}EventHandler()
+    ) {
+}

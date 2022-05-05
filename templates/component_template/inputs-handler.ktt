@@ -1,0 +1,12 @@
+package {{packagePath}}
+
+import com.copperleaf.ballast.InputHandler
+import com.copperleaf.ballast.InputHandlerScope
+
+class {{pascalName}}InputHandler : InputHandler<{{pascalName}}Contract.Inputs, {{pascalName}}Contract.Events, {{pascalName}}Contract.State> {
+    override suspend fun InputHandlerScope<{{pascalName}}Contract.Inputs, {{pascalName}}Contract.Events, {{pascalName}}Contract.State>.handleInput(
+        input: {{pascalName}}Contract.Inputs
+    ) = when (input) {
+        is {{pascalName}}Contract.Inputs.ChangeName -> TODO()
+    }
+}
