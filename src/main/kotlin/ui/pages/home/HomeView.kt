@@ -1,6 +1,7 @@
 package ui.pages.home
 
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
@@ -18,7 +19,11 @@ fun HomeView() {
     }
     val homeState: HomeContract.State by homeViewModel.observeStates().collectAsState()
 
-    CButton(onClick = {}, icon = Icons.Outlined.Home) {
-        Text("How you doing", fontFamily = IBMPLexSansFontFamily)
+    Column {
+        for (i in 1..3) {
+            CButton(onClick = {}, icon = Icons.Outlined.Home) {
+                Text("How you doing", fontFamily = IBMPLexSansFontFamily)
+            }
+        }
     }
 }

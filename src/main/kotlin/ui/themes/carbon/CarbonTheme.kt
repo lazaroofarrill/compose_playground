@@ -26,13 +26,13 @@ fun CarbonTheme(content: @Composable () -> Unit) {
 
     val gray10Colors = CarbonColors(
         background = Gray10,
-        layer = Blue70,
+        layer = Blue60,
         field = Gray90,
         border = White,
         text = Gray100,
         link = Blue70,
         icon = Gray100,
-        support = Blue80,
+        support = Blue70,
         focus = Blue80,
         skeleton = White,
     )
