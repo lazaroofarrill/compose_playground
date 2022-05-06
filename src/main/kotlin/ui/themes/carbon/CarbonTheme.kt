@@ -1,5 +1,6 @@
 package ui.themes.carbon
 
+import androidx.compose.material.LocalTextStyle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
@@ -31,7 +32,7 @@ fun CarbonTheme(content: @Composable () -> Unit) {
         text = Gray100,
         link = Blue70,
         icon = Gray100,
-        support = Gray80,
+        support = Blue80,
         focus = Blue90,
         skeleton = White,
     )
@@ -39,6 +40,7 @@ fun CarbonTheme(content: @Composable () -> Unit) {
     CompositionLocalProvider(
         LocalCarbonColors provides gray10Colors,
         LocalCarbonTypography provides carbonTypography,
+        LocalTextStyle provides LocalTextStyle.current.copy(fontFamily = IBMPLexSansFontFamily),
         content = content
     )
 }

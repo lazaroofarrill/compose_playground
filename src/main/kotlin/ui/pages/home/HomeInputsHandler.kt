@@ -7,6 +7,10 @@ class HomeInputHandler : InputHandler<HomeContract.Inputs, HomeContract.Events, 
     override suspend fun InputHandlerScope<HomeContract.Inputs, HomeContract.Events, HomeContract.State>.handleInput(
         input: HomeContract.Inputs
     ) = when (input) {
-        is HomeContract.Inputs.ChangeName -> TODO()
+        is HomeContract.Inputs.ChangeName -> {
+            updateState {
+                it.copy(name = input.newName)
+            }
+        }
     }
 }
