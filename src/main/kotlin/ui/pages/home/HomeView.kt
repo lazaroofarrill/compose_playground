@@ -4,6 +4,8 @@ package ui.pages.home
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Home
 import androidx.compose.runtime.*
 import ui.themes.carbon.CButton
 import ui.themes.carbon.IBMPLexSansFontFamily
@@ -16,7 +18,7 @@ fun HomeView() {
     }
     val homeState: HomeContract.State by homeViewModel.observeStates().collectAsState()
 
-    CButton(onClick = {}) {
+    CButton(onClick = {}, icon = Icons.Outlined.Home) {
         Text("How you doing", fontFamily = IBMPLexSansFontFamily)
     }
 }
