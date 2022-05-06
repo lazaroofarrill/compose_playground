@@ -1,7 +1,7 @@
-package {{packagePath}}
+package ui.pages.home
 
 
-object {{pascalName}}Contract {
+object HomeContract {
     data class State(
         val name: String = ""
     )

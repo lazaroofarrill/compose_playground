@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 )
 
@@ -16,9 +17,14 @@ func main() {
 	templateName := os.Args[1]
 	print(templateName)
 	fullName := os.Args[2]
-	println(fullName)
 
-	root := "../component_template"
+	if templateName == "c" {
+		templateName = "component"
+	} else if templateName == "t" {
+		templateName = "theme"
+	}
+
+	root := fmt.Sprintf("templates/%s_template", templateName)
 	var files []string
 	err = filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
 		if !info.IsDir() && strings.Index(path, "ktt") != -1 {
@@ -37,18 +43,21 @@ func main() {
 		packagePath, componentName := getPath(fullName)
 		dataToSave := replaceTokens(dataString, packagePath, componentName)
 
-		fileNameSplit := strings.Split(file, "/")
-		newFileName := replaceTokens(fileNameSplit[len(fileNameSplit)-1], packagePath, componentName)
+		//fileNameSplit := strings.Split(file, "/")
+		var fileNameSplit = regexp.MustCompile("[/:,.\\s]+").Split(file, -1)
+		var nameSlice = fileNameSplit[len(fileNameSplit)-2:]
+		log.Println(nameSlice, "name slice")
+		log.Println(componentName, "componentName")
+		newFileName := replaceTokens(strings.Join(nameSlice, "."), packagePath, componentName)
+		println(newFileName, "new filename")
 		newFileName = strings.ReplaceAll(newFileName, "ktt", "kt")
 		newFileName = toPascalCase(newFileName)
 		newFileName = strings.ReplaceAll(newFileName, "Kt", ".kt")
 		packageUri := strings.ReplaceAll(packagePath, ".", "/")
-		saveFolder := fmt.Sprintf("../../src/main/kotlin/%s", packageUri)
+		saveFolder := fmt.Sprintf("src/main/kotlin/%s", packageUri)
 		newPath := fmt.Sprintf("%s/%s", saveFolder, newFileName)
-		println(newPath, "the new path")
 		binaryData := []byte(dataToSave)
-		//println(binaryData)
-		//println(packageUri)
+
 		if _, err := os.Stat(saveFolder); errors.Is(err, os.ErrNotExist) {
 			err := os.Mkdir(saveFolder, os.ModePerm)
 			if err != nil {
@@ -60,11 +69,12 @@ func main() {
 			panic(err)
 			return
 		}
+		println("created --> ", newPath)
 	}
 }
 
 func getPath(value string) (string, string) {
-	splinted := strings.Split(value, "/")
+	splinted := regexp.MustCompile("[/:,.\\s]+").Split(value, -1)
 	name := splinted[len(splinted)-1]
 
 	return strings.Join(splinted, "."), name
@@ -73,7 +83,6 @@ func getPath(value string) (string, string) {
 func replaceTokens(data string, packagePath string, componentName string) string {
 	splitPath := strings.Split(packagePath, ".")
 	newPackagePath := strings.Join(append(splitPath[:len(splitPath)-1], toCamelCase(splitPath[len(splitPath)-1])), ".")
-	println(newPackagePath)
 	var result = data
 	result = strings.ReplaceAll(result, "{{pascalName}}", toPascalCase(componentName))
 	result = strings.ReplaceAll(result, "{{camelName}}", toCamelCase(componentName))
